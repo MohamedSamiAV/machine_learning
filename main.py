@@ -54,3 +54,13 @@ def pred_and_plot(filename, model, class_names, img_shape=224):
  def len_files(filename):  
   for dirpath, dirnames, filenames in os.walk(filename):
   print(f"There are {len(dirnames)} directories and {len(filenames)} images in '{dirpath}'")
+
+ def view_random_image(dir):
+  folder=os.listdir(dir)
+  rfold = random.choice(folder)
+  files=os.listdir(dir+"/"+rfold)
+  img = mpimg.imread(dir+"/"+rfold+"/"+random.choice(files))
+  plt.imshow(img)
+  plt.title(rfold)
+  plt.axis(False)
+  plt.show()
