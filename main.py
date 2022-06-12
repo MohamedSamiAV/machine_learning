@@ -8,6 +8,7 @@ import random
 import pandas as pd
 import random
 
+from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.models import clone_model
 from tensorflow.keras.layers import Conv2D, MaxPool2D, Flatten, Dense
@@ -33,7 +34,6 @@ def plot_loss_curves(history):
   plt.title("loss")
   plt.xlabel("epochs")
   plt.legend()
-
   plt.figure()
   plt.plot(epochs,accuracy, label="training_accuracy")
   plt.plot(epochs,val_accuracy, label="validation_accuracy")
@@ -47,8 +47,12 @@ def pred_and_plot(filename, model, class_names, img_shape=224):
   img = tf.image.resize(image, size=(img_shape,img_shape))
   img = img/255.
   img = tf.expand_dims(img,axis=0)
-  predict = model.predict(img)
-  predict = class_names[int(tf.round(predict))]
+  if len(class_names) == 2: 
+    predict = model.predict(img)
+    predict = class_names[int(tf.round(predict))]
+  else: 
+    predict = model.predict(img)
+    predict = class_names[int(predict.argmax())]
   plt.imshow(image)
   plt.title(predict)
   plt.axis(False)
@@ -66,3 +70,28 @@ def view_random_image(dir):
   plt.axis(False)
   plt.show()
   print(f"Image file Name: {files}")
+
+def tiny_cnn(train_data,test_data,epochs,loss,output,metrics="accuracy",input_size=(244,244,3),seed=0):
+  tf.random.set_seed(seed)
+
+  model = Sequential([
+    Conv2D(10,3,activation="relu",input_shape=input_size),
+    MaxPool2D(),
+    Conv2D(10,3,activation="relu"),
+    MaxPool2D(),
+    Conv2D(10,3,activation="relu"),
+    Conv2D(10,3,activation="relu"),
+    MaxPool2D(),
+    Flatten(),
+    Dense(output, activation="softmax")
+  ])
+
+  model.compile(loss=loss,
+                  optimizer=Adam(),
+                  metrics=[metrics])
+
+  history = model.fit(train_data,
+                      epochs=epochs,
+                      steps_per_epoch=len(train_data),
+                      validation_data=test_data,
+                      validation_steps=len(test_data))
