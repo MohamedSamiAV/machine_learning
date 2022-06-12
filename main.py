@@ -9,6 +9,7 @@ import pandas as pd
 import random
 
 from tensorflow.keras.models import Sequential
+from tensorflow.keras.models import clone_model
 from tensorflow.keras.layers import Conv2D, MaxPool2D, Flatten, Dense
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
