@@ -90,6 +90,12 @@ def tiny_cnn(train_data,test_data,epochs,loss,output,metrics="accuracy",input_si
                   optimizer=Adam(),
                   metrics=[metrics])
 
+def save_and_load(model,test_data,filename="saved_model"):
+  model.save(filename)
+  loaded_model = tf.keras.models.load_model(filename)
+  print(loaded_model.evaluate(test_data))
+  print(model.evaluate(test_data))
+  return loaded_model
   history = model.fit(train_data,
                       epochs=epochs,
                       steps_per_epoch=len(train_data),
