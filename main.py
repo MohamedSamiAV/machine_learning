@@ -15,7 +15,6 @@ from tensorflow.keras.layers import Conv2D, MaxPool2D, Flatten, Dense
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 def unzip(filename):
-
   unzip = zipfile.ZipFile(filename)
   unzip.extractall()
   unzip.close()
@@ -59,7 +58,7 @@ def pred_and_plot(filename, model, class_names, img_shape=224):
   
 def len_files(filename):  
   for dirpath, dirnames, filenames in os.walk(filename):
-  print(f"There are {len(dirnames)} directories and {len(filenames)} images in '{dirpath}'")
+    print(f"There are {len(dirnames)} directories and {len(filenames)} images in '{dirpath}'")
 
 def view_random_image(dir):
   folder = random.choice(os.listdir(dir))
