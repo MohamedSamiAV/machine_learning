@@ -220,11 +220,6 @@ def save_and_load(model,test_data,filename="saved_model"):
   print("unloaded model")
   print(model.evaluate(test_data))
   return loaded_model
-  history = model.fit(train_data,
-                      epochs=epochs,
-                      steps_per_epoch=len(train_data),
-                      validation_data=test_data,
-                      validation_steps=len(test_data))
   
 def create_tensorborad_callback(dir_name, experiment_name,india=False):
   if india == False:
