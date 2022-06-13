@@ -240,7 +240,7 @@ def model_from_url(model_url,num_classes,img_size):
   feature_extractor_layer = hub.KerasLayer(model_url,
                                            trainable=False,
                                            name="feature_extraction",
-                                           input_size = (img_size,img_size,3))
+                                           input_shape = (img_size,img_size,3))
   
   if num_classes == 2:
     activation = "sigmoid"
