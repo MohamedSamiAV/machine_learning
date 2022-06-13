@@ -1,3 +1,4 @@
 # machine_learning
 
-https://raw.githubusercontent.com/MohamedSamiAV/machine_learning/main/helper.py
+!wget https://raw.githubusercontent.com/MohamedSamiAV/machine_learning/main/helper.py
+from helper import *
