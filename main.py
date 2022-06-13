@@ -3,6 +3,7 @@ import os
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import tensorflow as tf
+import tensorflow_hub as hub
 import numpy as np
 import random
 import pandas as pd
@@ -10,6 +11,7 @@ import random
 import datetime
 import pytz
 
+from tensorflow.keras.callbacks import TensorBoard
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.models import clone_model
@@ -111,6 +113,6 @@ def create_tensorborad_callback(dir_name, experiment_name,india=False):
   else:
     tz = 'Asia/Kolkata'
   log_dir = dir_name +"/" + experiment_name+"/"+datetime.datetime.now(pytz.timezone(tz)).strftime("%y%m%d-%I%M%p")
-  tensorborad_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir)
+  tensorborad_callback = TensorBoard(log_dir=log_dir)
   print(f"Saving to:{log_dir}")
   return tensorborad_callback
