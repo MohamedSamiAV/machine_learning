@@ -7,6 +7,8 @@ import numpy as np
 import random
 import pandas as pd
 import random
+import datetime
+import pytz
 
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.models import Sequential
@@ -102,3 +104,13 @@ def save_and_load(model,test_data,filename="saved_model"):
                       steps_per_epoch=len(train_data),
                       validation_data=test_data,
                       validation_steps=len(test_data))
+  
+def create_tensorborad_callback(dir_name, experiment_name,india=False):
+  if india == False:
+    tz = 'Asia/Riyadh'
+  else:
+    tz = 'Asia/Kolkata'
+  log_dir = dir_name +"/" + experiment_name+"/"+datetime.datetime.now(pytz.timezone(tz)).strftime("%y%m%d-%I%M%p")
+  tensorborad_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir)
+  print(f"Saving to:{log_dir}")
+  return tensorborad_callback
