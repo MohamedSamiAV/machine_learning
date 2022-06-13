@@ -132,3 +132,7 @@ def model_from_url(model_url,num_classes,img_size):
                       Dense(num_classes,activation=activation,name="output_layer")
   ])
   return model
+
+def tensorflow(folder):
+  %load_ext tensorboard
+  %tensorboard --logdir ./tensorflow_hub/
