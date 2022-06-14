@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import tensorflow as tf
 import tensorflow_hub as hub
+import seaborn as sns
 import numpy as np
 import random
 import pandas as pd
