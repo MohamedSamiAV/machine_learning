@@ -114,6 +114,7 @@ def view_random_image(dir):
   plt.axis(False)
   plt.show()
   print(f"Image file Name: {files}")
+  return img
 
 def save_and_load(model,test_data,filename="saved_model"):
   model.save(filename)
