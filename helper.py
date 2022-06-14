@@ -18,6 +18,7 @@ from tensorflow.keras.callbacks import TensorBoard
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import CategoricalCrossentropy
 from tensorflow.keras import Model
+from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.models import clone_model
 from tensorflow.keras.layers import Conv2D, MaxPool2D, Flatten, Dense,Input, GlobalAveragePooling2D
