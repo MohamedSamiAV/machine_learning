@@ -110,25 +110,6 @@ def view_random_image(dir):
   plt.show()
   print(f"Image file Name: {files}")
 
-def tiny_cnn(train_data,test_data,epochs,loss,output,metrics="accuracy",input_size=(244,244,3),seed=0):
-  tf.random.set_seed(seed)
-
-  model = Sequential([
-    Conv2D(10,3,activation="relu",input_shape=input_size),
-    MaxPool2D(),
-    Conv2D(10,3,activation="relu"),
-    MaxPool2D(),
-    Conv2D(10,3,activation="relu"),
-    Conv2D(10,3,activation="relu"),
-    MaxPool2D(),
-    Flatten(),
-    Dense(output, activation="softmax")
-  ])
-
-  model.compile(loss=loss,
-                  optimizer=Adam(),
-                  metrics=[metrics])
-
 def save_and_load(model,test_data,filename="saved_model"):
   model.save(filename)
   loaded_model = tf.keras.models.load_model(filename)
