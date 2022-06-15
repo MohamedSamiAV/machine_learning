@@ -121,16 +121,13 @@ def view_random_image(dir):
 def save_and_load(model,test_data,filename="saved_model"):
   model.save(filename)
   loaded_model = tf.keras.models.load_model(filename)
+  loaded_eva = loaded_model.evaluate(test_data)
+  model_eva = model.evaluate(test_data)
   print("loaded model")
-  print(loaded_model.evaluate(test_data))
+  print(loaded_eva)
   print("unloaded model")
-  print(model.evaluate(test_data))
-  return loaded_model
-  history = model.fit(train_data,
-                      epochs=epochs,
-                      steps_per_epoch=len(train_data),
-                      validation_data=test_data,
-                      validation_steps=len(test_data))
+  print(model_eva)
+  print(np.isclose(np.array(model_eva),np.array(loaded_eva))
   return loaded_model
   
 def create_tensorborad_callback(dir_name, experiment_name,tz='Asia/Riyadh'):
