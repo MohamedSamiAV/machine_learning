@@ -127,7 +127,7 @@ def save_and_load(model,test_data,filename="saved_model"):
   print(loaded_eva)
   print("unloaded model")
   print(model_eva)
-  print(np.isclose(np.array(model_eva),np.array(loaded_eva))
+  print(np.isclose(np.array(model_eva),np.array(loaded_eva)))
   return loaded_model
   
 def create_tensorborad_callback(dir_name, experiment_name,tz='Asia/Riyadh'):
