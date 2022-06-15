@@ -166,7 +166,7 @@ def model_from_url(model_url,num_classes,img_size):
   ])
   return model
 
-def checkpoint_callback(filename,save_weights_only=False,save_best_only=False,monitor='val_loss',verbose=1):
+def checkpoint_callback(filename,save_best_only=False,save_weights_only=False,monitor='val_loss',verbose=1):
   checkpoint_path = "checkpoint/"+filename+".ckpt"
   checkpoint = tf.keras.callbacks.ModelCheckpoint(checkpoint_path,
                                                   monitor=monitor,
