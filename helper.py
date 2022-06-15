@@ -255,7 +255,7 @@ def compare_historys(original_history, new_history, initial_epochs=5):
     plt.subplot(2, 1, 2)
     plt.plot(total_loss, label='Training Loss')
     plt.plot(total_val_loss, label='Validation Loss')
-    plt.plot([initial_epochs-1, initial_epochs-1],
+    plt.plot([initial_epochs, initial_epochs],
               plt.ylim(), label='Start Fine Tuning') # reshift plot around epochs
     plt.legend(loc='upper right')
     plt.title('Training and Validation Loss')
