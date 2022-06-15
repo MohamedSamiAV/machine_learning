@@ -89,6 +89,8 @@ def pred_and_plot(filename, model, class_names, img_shape=224):
   plt.title(predict)
   plt.axis(False);
   
+  return predict
+  
 def dir_walk(dir_path):
   """
   Walks through dir_path returning its contents.
@@ -129,6 +131,7 @@ def save_and_load(model,test_data,filename="saved_model"):
                       steps_per_epoch=len(train_data),
                       validation_data=test_data,
                       validation_steps=len(test_data))
+  return loaded_model
   
 def create_tensorborad_callback(dir_name, experiment_name,tz='Asia/Riyadh'):
   """
@@ -163,7 +166,16 @@ def model_from_url(model_url,num_classes,img_size):
   ])
   return model
 
-def make_confusion_matrix(y_true,y_pred,classes=None,figsize=(15,15), fontsize=20, savefig=False): 
+def checkpoint_callback(filename,save_weights_only=False,save_best_only=False,monitor='val_loss',verbose=1):
+  checkpoint_path = "checkpoint/"+filename+".ckpt"
+  checkpoint = tf.keras.callbacks.ModelCheckpoint(checkpoint_path,
+                                                  monitor=monitor,
+                                                  verbose=verbose,
+                                                  save_best_only=save_best_only,
+                                                  save_weights_only=save_weights_only)
+  return checkpoint
+
+def make_confusion_matrix(y_true,y_pred,classes=None,figsize=(15,15), fontsize=20, savefig=""): 
   """Makes a labelled confusion matrix comparing predictions and ground truth labels.
 
   If classes is passed, confusion matrix will be labelled, if not, integer class values
@@ -175,7 +187,7 @@ def make_confusion_matrix(y_true,y_pred,classes=None,figsize=(15,15), fontsize=2
     classes: Array of class labels (e.g. string form). If `None`, integer labels are used.
     figsize: Size of output figure (default=(15, 15)).
     text_size: Size of output figure text (default=15).
-    savefig: save confusion matrix to file (default=False).
+    savefig: Provide filename to save confusion matrix to file (default="").
   
   Returns:
     A labelled confusion matrix plot comparing y_true and y_pred.
@@ -206,8 +218,10 @@ def make_confusion_matrix(y_true,y_pred,classes=None,figsize=(15,15), fontsize=2
   plt.show()
 
   # Save the figure to the current working directory
-  if savefig:
-    fig.savefig("confusion_matrix.png")
+  if savefig != "":
+    fig.savefig(savefig)
+    
+   return cm
 
 def compare_historys(original_history, new_history, initial_epochs=5):
     """
