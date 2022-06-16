@@ -130,7 +130,7 @@ def save_and_load(model,test_data,filename="saved_model"):
   print(np.isclose(np.array(model_eva),np.array(loaded_eva)))
   return loaded_model
   
-def create_tensorborad_callback(dir_name, experiment_name,tz='Asia/Riyadh'):
+def create_tensorborad_callback(experiment_name,dir_name="tensorboard",tz='Asia/Riyadh'):
   """
   Creates a TensorBoard callback instand to store log files.
 
