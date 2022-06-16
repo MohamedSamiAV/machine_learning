@@ -13,7 +13,7 @@ import datetime
 import pytz
 import itertools
 
-from google.colab import files
+from google import colab
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support, confusion_matrix
 from tensorflow.keras.callbacks import TensorBoard
 from tensorflow.keras.optimizers import Adam
@@ -135,7 +135,7 @@ def save_and_load(model,test_data,evaluate=True,filename="saved_model"):
     for file in files:
         zipf.write(os.path.join(root, file))
   zipf.close()
-  files.download(filename)
+  colab.files.download(filename)
   return loaded_model
   
 def create_tensorborad_callback(experiment_name,dir_name="tensorboard",tz='Asia/Riyadh'):
