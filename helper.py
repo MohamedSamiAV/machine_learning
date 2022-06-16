@@ -130,6 +130,12 @@ def save_and_load(model,test_data,evaluate=True,filename="saved_model"):
     print("unloaded model")
     print(model_eva)
     print(np.isclose(np.array(model_eva),np.array(loaded_eva)))
+  zipf = zipfile.ZipFile(filename+".zip", 'w', zipfile.ZIP_DEFLATED)
+  for root, dirs, files in os.walk(filename):
+    for file in files:
+        zipf.write(os.path.join(root, file))
+  zipf.close()
+  files.download(filename)
   return loaded_model
   
 def create_tensorborad_callback(experiment_name,dir_name="tensorboard",tz='Asia/Riyadh'):
