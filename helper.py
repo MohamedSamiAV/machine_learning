@@ -135,7 +135,6 @@ def save_and_load(model,test_data,evaluate=True,filename="saved_model"):
     for file in files:
         zipf.write(os.path.join(root, file))
   zipf.close()
-  colab.files.download(filename)
   return loaded_model
   
 def create_tensorborad_callback(experiment_name,dir_name="tensorboard",tz='Asia/Riyadh'):
