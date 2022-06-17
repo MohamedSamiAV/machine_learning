@@ -119,9 +119,10 @@ def view_random_image(dir):
   print(f"Image file Name: {files}")
   return img
 
-def save_and_load(model,test_data,evaluate=True,filename="drive/models/saved_model"):
+def save_and_load(model,test_data,evaluate=True,filename="saved_model"):
+  filenames = "drive/MyDrive/models/"+filename
   model.save(filename)
-  loaded_model = tf.keras.models.load_model(filename)
+  loaded_model = tf.keras.models.load_model(filenames)
   if evaluate==True:
     loaded_eva = loaded_model.evaluate(test_data)
     model_eva = model.evaluate(test_data)
@@ -130,8 +131,8 @@ def save_and_load(model,test_data,evaluate=True,filename="drive/models/saved_mod
     print("unloaded model")
     print(model_eva)
     print(np.isclose(np.array(model_eva),np.array(loaded_eva)))
-  zipf = zipfile.ZipFile(filename+".zip", 'w', zipfile.ZIP_DEFLATED)
-  for root, dirs, files in os.walk(filename):
+  zipf = zipfile.ZipFile(filenames+".zip", 'w', zipfile.ZIP_DEFLATED)
+  for root, dirs, files in os.walk(filenames):
     for file in files:
         zipf.write(os.path.join(root, file))
   zipf.close()
