@@ -121,7 +121,7 @@ def view_random_image(dir):
   return img
 
 def save_and_load(model,test_data,evaluate=False,filename="saved_model"):
-  filenames = "drive/MyDrive/models/"+filename
+  filenames = "/drive/MyDrive/models/saved_model"+filename
   model.save(filenames)
   loaded_model = tf.keras.models.load_model(filenames)
   if evaluate==True:
