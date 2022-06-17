@@ -119,7 +119,7 @@ def view_random_image(dir):
   print(f"Image file Name: {files}")
   return img
 
-def save_and_load(model,test_data,evaluate=True,filename="saved_model"):
+def save_and_load(model,test_data,evaluate=False,filename="saved_model"):
   filenames = "drive/MyDrive/models/"+filename
   model.save(filename)
   loaded_model = tf.keras.models.load_model(filenames)
@@ -131,11 +131,6 @@ def save_and_load(model,test_data,evaluate=True,filename="saved_model"):
     print("unloaded model")
     print(model_eva)
     print(np.isclose(np.array(model_eva),np.array(loaded_eva)))
-  zipf = zipfile.ZipFile(filenames+".zip", 'w', zipfile.ZIP_DEFLATED)
-  for root, dirs, files in os.walk(filenames):
-    for file in files:
-        zipf.write(os.path.join(root, file))
-  zipf.close()
   return loaded_model
   
 def create_tensorborad_callback(experiment_name,dir_name="tensorboard",tz='Asia/Riyadh'):
