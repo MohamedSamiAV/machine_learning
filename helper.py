@@ -71,15 +71,16 @@ def plot_loss_curves(history):
   plt.xlabel('Epochs')
   plt.legend();
 
-def pred_and_plot(filename, model, class_names, img_shape=224):
+def pred_and_plot(filename, model, class_names,rescale=True, img_shape=224):
   """
   Imports an image located at filename, makes a prediction on it with
   a trained model and plots the image with the predicted class as the title.
   """
   img = tf.io.read_file(filename)
-  image = tf.image.decode_image(img)
+  image = tf.image.decode_image(img,3)
   img = tf.image.resize(image, size=(img_shape,img_shape))
-  img = img/255.
+  if rescale:
+    img = img/255.
   img = tf.expand_dims(img,axis=0)
   if len(class_names) == 2: 
     predict = model.predict(img)
@@ -212,8 +213,8 @@ def make_confusion_matrix(y_true,y_pred,classes=None,figsize=(15,15), fontsize=2
     labels = classes
   else:
     labels = np.arange(cm.shape[0])
-  ax.xaxis.set_ticklabels(labels)
-  ax.yaxis.set_ticklabels(labels)
+  ax.xaxis.set_ticklabels(labels,rotation=70)
+  ax.yaxis.set_ticklabels(labels,rotation=0)
 
   ## Display the visualization of the Confusion Matrix.
   plt.show()
@@ -287,3 +288,21 @@ def calculate_results(y_true, y_pred):
                   "recall": model_recall,
                   "f1": model_f1}
   return model_results
+
+def f1_score(y_true,y_pred,class_names,figsize=(12,25)):
+  class_f1_scores = {}
+  report = classification_report(y_true,y_pred,output_dict=True)
+  for k,v in report.items():
+    if k == "accuracy":
+      break
+    else:
+      class_f1_scores[class_names[int(k)]] = v["f1-score"]
+  f1_scores = pd.DataFrame({"class_names":list(class_f1_scores.keys()),
+                            "f1-score":list(class_f1_scores.values())}).sort_values("f1-score",ascending=False)
+  fig, ax = plt.subplots(figsize)
+  scores = ax.barh(range(len(f1_scores)),f1_scores["f1-score"].values)
+  ax.set_yticks(range(len(f1_scores)))
+  ax.set_yticklabels(f1_scores["class_names"])
+  ax.set_xlabel("F1-score")
+  ax.set_title("F1-score for each class names")
+  ax.invert_yaxis()
