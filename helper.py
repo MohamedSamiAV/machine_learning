@@ -240,7 +240,34 @@ def calculate_results(y_true, y_pred):
                   "recall": model_recall,
                   "f1": model_f1}
   return model_results
-  
+
+def wrong_100(test_dir,y_true,y_prob,class_names,start_index,img_shape=224):
+  y_preds = y_prob.argmax(axis=1)
+  filepaths = []
+  images_to_view = 9
+  for filepath in test_data.list_files(test_dir+"/*/*.jpg",shuffle=False):
+    filepaths.append(filepath.numpy())
+  pred_df = pd.DataFrame({"img_path":filepaths,
+                          "y_true":y_true,
+                          "y_pred":y_preds,
+                          "pred_conf":y_prob.max(axis=1),
+                          "y_true_classname":[class_names[i] for i in y_true],
+                          "y_pred_classname":[class_names[i] for i in y_preds]})
+  pred_df["pred_correct"] = pred_df["y_true"] == pred_df["y_pred"]
+  top_100_wrong = pred_df[pred_df["pred_correct"]==False].sort_values("pred_conf",ascending=False)[:100]
+  plt.figure(figsize=(15,12))
+  for i, row in enumerate(top_100_wrong[start_index:start_index+images_to_view].itertuples()):
+    plt.subplot(3,3,i+1)
+    img = tf.io.read_file(row[1])
+    image = tf.image.decode_image(img,3)
+    img = tf.image.resize(image, size=(img_shape,img_shape))
+    img = img/255.
+    _, _, _,_,pred_conf, y_true_classname, y_pred_classname,_ = row
+    plt.imshow(img)
+    plt.title(f"actual:{y_true_classname}, pred: {y_pred_classname}\n {pred_conf*100}.2:f")
+    plt.axis(False)
+  return top_100_wrong
+
 def pred_and_plot(filename, model, class_names,rescale=True, img_shape=224):
   """
   Imports an image located at filename, makes a prediction on it with
