@@ -15,6 +15,7 @@ import itertools
 import time
 import tensorflow_datasets as tfds
 
+from tensorflow.keras import mixed_precision
 from google import colab
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support, confusion_matrix, classification_report
 from tensorflow.keras.callbacks import TensorBoard
