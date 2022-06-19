@@ -108,7 +108,7 @@ def compare_historys(history_1, history_2=None, initial_epochs=5,figsize=(10,10)
     total_val_acc = val_acc + history_2.history["val_accuracy"]
     total_val_loss = val_loss + history_2.history["val_loss"]
 
-  if history_2 != None:
+  if history_2 == None:
     # Plot loss
     plt.plot(epochs, loss, label='training_loss')
     plt.plot(epochs, val_loss, label='val_loss')
