@@ -25,7 +25,7 @@ from tensorflow.keras import Model
 from tensorflow.keras import layers
 from tensorflow.keras import Sequential
 from tensorflow.keras.models import clone_model
-from tensorflow.keras.layers import Conv2D, MaxPool2D, Flatten, Dense,Input, GlobalAveragePooling2D
+from tensorflow.keras.layers import Conv2D, MaxPool2D, Flatten, Dense,Input, GlobalAveragePooling2D, Activation
 from tensorflow.keras.layers.experimental.preprocessing import Rescaling
 from tensorflow.keras.layers.experimental import preprocessing
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
