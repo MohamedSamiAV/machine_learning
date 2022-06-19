@@ -20,7 +20,7 @@ from google import colab
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support, confusion_matrix, classification_report
 from tensorflow.keras.callbacks import TensorBoard
 from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.losses import CategoricalCrossentropy
+from tensorflow.keras.losses import CategoricalCrossentropy, SparseCategoricalCrossentropy
 from tensorflow.keras import Model
 from tensorflow.keras import layers
 from tensorflow.keras import Sequential
